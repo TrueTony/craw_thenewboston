@@ -5,8 +5,8 @@ from domain import *
 from general import *
 
 
-PROJECT_NAME = 'VTK'
-HOMEPAGE = 'http://www.vtkt.ru'
+PROJECT_NAME = 'dock_python'
+HOMEPAGE = 'https://docs.python.org'
 DOMAIN = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
@@ -23,9 +23,10 @@ def create_workers():
 
 # Do the next job in the queue
 def work():
-    url = queue.get()
-    Spider.crawl_page(threading.current_thread().name, url)
-    queue.task_done()
+    while True:
+        url = queue.get()
+        Spider.crawl_page(threading.current_thread().name, url)
+        queue.task_done()
 
 # Eache queued link is a new job
 def create_jobs():

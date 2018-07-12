@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 from link_finder import LinkFinder
+from domain import *
 from general import *
 
 
@@ -55,15 +56,13 @@ class Spider:
             print(str(e))
             return set()
         return finder.page_links()
-        
+
     @staticmethod
     def add_links_to_queue(links):
         for url in links:
-            if url in Spider.queue:
+            if (url in Spider.queue) or (url in Spider.crawled):
                 continue
-            if url in Spider.crawled:
-                continue
-            if Spider.domain_name is not url:
+            if Spider.domain_name != get_domain_name(url):
                 continue
             Spider.queue.add(url)
 
